@@ -30,14 +30,12 @@ Issuer.discover('https://webexapis.com/v1')
         passport.use('oidc', new Strategy({
             client,
             params: { scope: 'openid email spark:people_read' },
-        },
-            verify = async (tokenset, userinfo, done) => {
-                if (userinfo.email && userinfo.email !== process.env.APP_AUTHORIZED_USER) {
-                    return done(`Access denied`, null);
-                }
-                return done(null, { tokenset: tokenset, userinfo: userinfo });
-            })
-        );
+        }, async (tokenset, userinfo, done) => {
+            if (userinfo.email && userinfo.email !== process.env.APP_AUTHORIZED_USER) {
+                return done(`Access denied`, null);
+            }
+            return done(null, { tokenset: tokenset, userinfo: userinfo });
+        }));
     });
 
 app.get('/login', passport.authenticate('oidc'));
