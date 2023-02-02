@@ -25,7 +25,7 @@ Issuer.discover('https://webexapis.com/v1')
         var client = new issuer.Client({
             client_id: process.env.WEBEX_CLIENT_ID,
             client_secret: process.env.WEBEX_CLIENT_SECRET,
-            redirect_uris: process.env.APP_REDIRECT_URL,
+            redirect_uris: [process.env.APP_REDIRECT_URL],
         });
         passport.use('oidc', new Strategy({
             client,
