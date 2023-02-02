@@ -1,7 +1,7 @@
 const express = require('express');
 const session = require('express-session');
 const passport = require('passport');
-const { Issuer, Strategy } = require('openid-client');
+const { Issuer, Strategy, custom } = require('openid-client');
 const axios = require('axios');
 require('dotenv').config();
 
@@ -33,6 +33,11 @@ const client = new issuer.Client({
     client_secret: process.env.WEBEX_CLIENT_SECRET,
     redirect_uris: [process.env.APP_REDIRECT_URL],
 });
+
+//Increase openid-client request timeout to 10 sec (default 3.5)
+custom.setHttpOptionsDefaults({
+    timeout: 10000,
+  });
 
 passport.use('oidc', new Strategy({
     client,
