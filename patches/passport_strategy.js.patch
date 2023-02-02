@@ -1,0 +1,10 @@
+--- node_modules/openid-client/lib/passport_strategy.js	2023-02-01 23:43:16.040813269 -0600
++++ node_modules/openid-client/lib/passport_strategy_log_error.js	2023-02-01 23:38:43.703673660 -0600
+@@ -183,6 +183,7 @@
+     this._verify(...args);
+     /* end authentication response */
+   })().catch((error) => {
++    console.log(error);
+     if (
+       (error instanceof OPError &&
+         error.error !== 'server_error' &&

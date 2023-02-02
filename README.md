@@ -29,12 +29,14 @@ Sample demonstrating a simple Node.js/Express web app using Login with Webex via
   npm install
   ```
 
-* Currently there is an issue with the `openid-connect` package (v5.3.2) and OpenID Connect issuers (like Webex) that provide multiple JWT validation keys.  A one line patch (in `client.js.patch`) is provided as a workaround.
+* Currently there is an issue with the `openid-connect` package (v5.3.2) and OpenID Connect issuers (like Webex) that provide multiple JWT validation keys.  A one line patch (in `patches/client.js.patch`) is provided as a workaround.
 
-  To install the patch:
+  An patch to add additional error output when OAuth/JWT authentication errors occur has also been provided in `patches/passport_strategy.js.patch`).
+
+  To install both patches:
 
   ```bash
-  ./patch_client.sh
+  ./apply_patches.sh
   ```
 
 * Create a [Webex Integration](https://developer.webex.com/docs/integrations):
