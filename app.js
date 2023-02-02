@@ -20,23 +20,29 @@ app.use(passport.session());
 passport.serializeUser((user, done) => { done(null, user) });
 passport.deserializeUser((user, done) => { done(null, user) });
 
-Issuer.discover('https://webexapis.com/v1')
-    .then((issuer) => {
-        var client = new issuer.Client({
-            client_id: process.env.WEBEX_CLIENT_ID,
-            client_secret: process.env.WEBEX_CLIENT_SECRET,
-            redirect_uris: [process.env.APP_REDIRECT_URL],
-        });
-        passport.use('oidc', new Strategy({
-            client,
-            params: { scope: 'openid email spark:people_read' },
-        }, async (tokenset, userinfo, done) => {
-            if (userinfo.email && userinfo.email !== process.env.APP_AUTHORIZED_USER) {
-                return done(`Access denied`, null);
-            }
-            return done(null, { tokenset: tokenset, userinfo: userinfo });
-        }));
-    });
+const issuer = new Issuer({
+    issuer: 'https://idbroker.webex.com/idb',
+    authorization_endpoint: 'https://webexapis.com/v1/authorize',
+    token_endpoint: 'https://webexapis.com/v1/access_token',
+    userinfo_endpoint: 'https://webexapis.com/v1/userinfo',
+    jwks_uri: 'https://webexapis.com/v1/verification',
+});
+
+const client = new issuer.Client({
+    client_id: process.env.WEBEX_CLIENT_ID,
+    client_secret: process.env.WEBEX_CLIENT_SECRET,
+    redirect_uris: [process.env.APP_REDIRECT_URL],
+});
+
+passport.use('oidc', new Strategy({
+    client,
+    params: { scope: 'openid email spark:people_read' },
+}, async (tokenset, userinfo, done) => {
+    if (userinfo.email && userinfo.email !== process.env.APP_AUTHORIZED_USER) {
+        return done(`Access denied`, null);
+    }
+    return done(null, { tokenset: tokenset, userinfo: userinfo });
+}));
 
 app.get('/login', passport.authenticate('oidc'));
 
