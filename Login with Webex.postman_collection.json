@@ -1,0 +1,252 @@
+{
+	"info": {
+		"_postman_id": "b2e5dd6e-5b17-45b2-877c-761956baf6ba",
+		"name": "Login with Webex",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "12505680"
+	},
+	"item": [
+		{
+			"name": "Discovery",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://webexapis.com/v1/.well-known/openid-configuration",
+					"protocol": "https",
+					"host": [
+						"webexapis",
+						"com"
+					],
+					"path": [
+						"v1",
+						".well-known",
+						"openid-configuration"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Launch Authorization Code Flow",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://webexapis.com/v1/authorize?client_id={{client_id}}&scope=openid email&response_type=code&redirect_uri=https://localhost/callback&state=state_random_string",
+					"protocol": "https",
+					"host": [
+						"webexapis",
+						"com"
+					],
+					"path": [
+						"v1",
+						"authorize"
+					],
+					"query": [
+						{
+							"key": "client_id",
+							"value": "{{client_id}}"
+						},
+						{
+							"key": "scope",
+							"value": "openid email",
+							"description": "Add additional Webex REST API scopes as needed"
+						},
+						{
+							"key": "response_type",
+							"value": "code"
+						},
+						{
+							"key": "redirect_uri",
+							"value": "https://localhost/callback",
+							"description": "Browser will report 'Connection Refused' but authorization code can be view/copied from the URL bar"
+						},
+						{
+							"key": "state",
+							"value": "state_random_string"
+						},
+						{
+							"key": "nonce",
+							"value": "none_random_string",
+							"description": "Used with PKCE",
+							"disabled": true
+						},
+						{
+							"key": "code_challenge_method",
+							"value": "S256",
+							"description": "Used with PKCE",
+							"disabled": true
+						},
+						{
+							"key": "code_challenge",
+							"value": "",
+							"description": "Used with PKCE",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Request Access Token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200 OK\", pm.response.code == 200);",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"pm.collectionVariables.set(\"_access_token\", jsonData.access_token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "{{client_id}}",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "{{client_secret}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "grant_type",
+							"value": "authorization_code",
+							"type": "text"
+						},
+						{
+							"key": "code",
+							"value": "",
+							"description": "Copy from browser URL after Idp authentication",
+							"type": "text"
+						},
+						{
+							"key": "redirect_uri",
+							"value": "https://localhost/callback",
+							"type": "text"
+						},
+						{
+							"key": "code_verifier",
+							"value": "",
+							"description": "Used with PKCE",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "https://webexapis.com/v1/access_token",
+					"protocol": "https",
+					"host": [
+						"webexapis",
+						"com"
+					],
+					"path": [
+						"v1",
+						"access_token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UserInfo",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{_access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://webexapis.com/v1/userinfo",
+					"protocol": "https",
+					"host": [
+						"webexapis",
+						"com"
+					],
+					"path": [
+						"v1",
+						"userinfo"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "client_id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "client_secret",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "_access_token",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
