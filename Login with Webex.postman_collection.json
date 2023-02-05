@@ -29,6 +29,29 @@
 		},
 		{
 			"name": "Launch Authorization Code Flow",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"followRedirects": false
+			},
 			"request": {
 				"auth": {
 					"type": "noauth"
@@ -36,7 +59,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://webexapis.com/v1/authorize?client_id={{client_id}}&scope=openid email&response_type=code&redirect_uri=https://localhost/callback&state=state_random_string",
+					"raw": "https://webexapis.com/v1/authorize?client_id={{client_id}}&scope=openid email&response_type=code&redirect_uri={{redirect_uri}}&state=state_random_string",
 					"protocol": "https",
 					"host": [
 						"webexapis",
@@ -62,7 +85,7 @@
 						},
 						{
 							"key": "redirect_uri",
-							"value": "https://localhost/callback",
+							"value": "{{redirect_uri}}",
 							"description": "Browser will report 'Connection Refused' but authorization code can be view/copied from the URL bar"
 						},
 						{
@@ -142,13 +165,13 @@
 						},
 						{
 							"key": "code",
-							"value": "",
+							"value": "MjlkN2M2N2MtMjcxNS00ZTQxLWIzOTUtNTA2MTY1NGNjY2I0NzIyNTE0OWYtMmFl_PF84_beac9fee-ee78-4a70-b13d-048f151d8d6b",
 							"description": "Copy from browser URL after Idp authentication",
 							"type": "text"
 						},
 						{
 							"key": "redirect_uri",
-							"value": "https://localhost/callback",
+							"value": "{{redirect_uri}}",
 							"type": "text"
 						},
 						{
@@ -240,6 +263,11 @@
 		},
 		{
 			"key": "client_secret",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "redirect_uri",
 			"value": "",
 			"type": "string"
 		},
