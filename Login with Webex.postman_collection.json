@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "a3e49038-8497-423c-a36b-3c5b7f1f8115",
+		"_postman_id": "d673c90f-400d-4133-a6fc-c1d07e64dcbe",
 		"name": "Login with Webex",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "12505680"
@@ -94,7 +94,7 @@
 						},
 						{
 							"key": "nonce",
-							"value": "none_random_string",
+							"value": "nonce_random_string",
 							"description": "Used with PKCE",
 							"disabled": true
 						},
@@ -165,8 +165,8 @@
 						},
 						{
 							"key": "code",
-							"value": "MjlkN2M2N2MtMjcxNS00ZTQxLWIzOTUtNTA2MTY1NGNjY2I0NzIyNTE0OWYtMmFl_PF84_beac9fee-ee78-4a70-b13d-048f151d8d6b",
-							"description": "Copy from browser URL after Idp authentication",
+							"value": "",
+							"description": "Copy from browser URL after IdP authentication",
 							"type": "text"
 						},
 						{
