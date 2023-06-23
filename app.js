@@ -35,7 +35,7 @@ const client = new issuer.Client({
 });
 
 //Increase openid-client request timeout to 10 sec (default 3.5)
-custom.setHttpOptionsDefaults({timeout: 10000});
+custom.setHttpOptionsDefaults({ timeout: 10000 });
 
 passport.use('oidc', new Strategy({
     client,

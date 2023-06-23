@@ -6,6 +6,7 @@
     "configurations": [
         {
             "type": "node",
+            "runtimeExecutable": "/home/dstaudt/.nvm/versions/node/v18.16.1/bin/node",
             "request": "launch",
             "name": "Launch Program",
             "skipFiles": [

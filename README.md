@@ -10,7 +10,7 @@ Sample demonstrating a simple Node.js/Express web app using Login with Webex via
 
   [Caddy](https://caddyserver.com/) provides a simple reverse proxy suitable for development.  `caddy.sh` is included if it's installed.
 
-* Node.js (tested with v16.14.2)
+* Node.js (tested with v18.16.1)
 
 * (Optional) The project was developed using [Visual Studio Code](https://code.visualstudio.com/) (a `launch.json` is included).
 
@@ -29,11 +29,9 @@ Sample demonstrating a simple Node.js/Express web app using Login with Webex via
   npm install
   ```
 
-* Currently there is an issue with the `openid-connect` package (v5.3.2) and OpenID Connect issuers (like Webex) that provide multiple JWT validation keys.  A one line patch (in `patches/client.js.patch`) is provided as a workaround.
+* (Optional) A patch to add additional debug output when OAuth/JWT authentication errors occur has also been provided in `patches/passport_strategy.js.patch`.
 
-  An patch to add additional error output when OAuth/JWT authentication errors occur has also been provided in `patches/passport_strategy.js.patch`).
-
-  To install both patches:
+  To install the patch:
 
   ```bash
   ./apply_patches.sh
