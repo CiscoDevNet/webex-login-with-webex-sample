@@ -37,15 +37,18 @@ const client = new issuer.Client({
 //Increase openid-client request timeout to 10 sec (default 3.5)
 custom.setHttpOptionsDefaults({ timeout: 10000 });
 
-passport.use('oidc', new Strategy({
-    client,
-    params: { scope: process.env.APP_SCOPES },
-}, async (tokenset, userinfo, done) => {
-    if (userinfo.email && userinfo.email !== process.env.APP_AUTHORIZED_USER) {
-        return done(`Access denied`, null);
-    }
-    return done(null, { tokenset: tokenset, userinfo: userinfo });
-}));
+passport.use(
+    'oidc',
+    new Strategy(
+        options = { client, params: { scope: process.env.APP_SCOPES } },
+        verify = async (tokenset, userinfo, done) => {
+            if (userinfo.email && userinfo.email !== process.env.APP_AUTHORIZED_USER) {
+                return done(`Access denied`, null);
+            }
+            return done(null, { tokenset: tokenset, userinfo: userinfo });
+        }
+    )
+);
 
 app.get('/login', passport.authenticate('oidc'));
 

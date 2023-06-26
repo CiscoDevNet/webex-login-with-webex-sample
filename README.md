@@ -1,6 +1,6 @@
 # webex-login-with-webex-sample
 
-Sample demonstrating a simple Node.js/Express web app using Login with Webex via OpenId Connect.
+Sample demonstrating how to protect a resource, with a simple Node.js/Express web app using Login with Webex via OpenId Connect.
 
 [Login with Webex](https://developer.webex.com/docs/login-with-webex)
 
@@ -8,7 +8,7 @@ Sample demonstrating a simple Node.js/Express web app using Login with Webex via
 
 * An HTTP reverse proxy configured to forward HTTPS to this applications' web server on port 8080 (default.)
 
-  [Caddy](https://caddyserver.com/) provides a simple reverse proxy suitable for development.  `caddy.sh` is included if it's installed.
+  [Caddy](https://caddyserver.com/) provides a simple reverse proxy suitable for development.  `caddy.sh` is included, for use if it's installed.
 
 * Node.js (tested with v18.16.1)
 
@@ -149,7 +149,7 @@ This will be available to other requests (e.g. **UserInfo**) automatically, so y
 
 **Tip**
 
-You can use the [Postman console]() to view the actual/raw HTTP request/response contents - often helpful during troubleshooting:
+You can use the [Postman console](https://blog.postman.com/the-postman-console/) to view the actual/raw HTTP request/response contents - often helpful during troubleshooting:
 
 ![Postman Console](images/postman_console.png)
 
